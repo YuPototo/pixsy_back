@@ -1,9 +1,12 @@
 import express from "express";
+import cors from "cors";
 import data from "./data";
 import { isKeywordInPhoto } from "./utils";
 
 const server = express();
 const port = process.env.PORT || 3000;
+
+server.use(cors());
 
 // api: get photos
 server.get("/photos", (req, res) => {
@@ -37,7 +40,6 @@ server.get("/photos", (req, res) => {
     }
 
     // get photos by page
-    console.log(photosToReturn);
     const photos = photosToReturn.slice(startIndex, endIndex);
 
     return res.json({ photos });
@@ -48,6 +50,7 @@ const topics = data.map((photo) => photo.topics).flat();
 const uniqueTopics = [...new Set(topics)].sort((a, b) => a.localeCompare(b));
 
 server.get("/topics", (req, res) => {
+    console.log("GET /topics");
     return res.json({ topics: uniqueTopics });
 });
 
