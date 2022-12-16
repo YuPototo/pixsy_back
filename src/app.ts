@@ -42,7 +42,13 @@ server.get("/photos", (req, res) => {
     // get photos by page
     const photos = photosToReturn.slice(startIndex, endIndex);
 
-    return res.json({ photos });
+    // has previous page
+    const hasPreviousPage = startIndex > 0;
+
+    // has next page
+    const hasNextPage = endIndex < photosToReturn.length;
+
+    return res.json({ photos, hasPreviousPage, hasNextPage });
 });
 
 // api: topics
